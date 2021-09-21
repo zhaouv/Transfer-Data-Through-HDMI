@@ -51,7 +51,7 @@ Transfer data from a network-isolated system.
 目前简略实现了 22的格子储存1比特 和 44的格子储存3比特 ,最便宜的 hdmi in + hdmi out + usb3.0 的 RMB129的采集卡压缩的比较多, 只能到这种程度了, 而且fps只能到5. 44的格子储存3比特 的组合的话每帧的信息是 22的格子储存1比特 的3/4.
 
 [发送端](psend1.py)  
-[接收端](precieve.py)  
+[接收端](precieve1.py)  
 
 ## 效果
 
