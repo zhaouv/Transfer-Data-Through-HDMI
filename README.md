@@ -288,3 +288,46 @@ MD5 (dev.test.zip) = abbfda1a505eedbd2bea255fb60bffe6
 
 ```
 
+## Disclaimer/免责声明
+
+Please thoroughly read and understand the following disclaimer as it forms part of the legal agreement of your use of this project and its related files and content (collectively referred to as "the Resources").
+When utilizing these Resources, you must abide by all applicable laws and best practices. It is solely your responsibility to ensure that your usage does not infringe any third party's rights, including but not limited to privacy, intellectual property, and any other ownership or legal rights.
+
+请仔细阅读并理解以下免责声明条款，因为它们是您使用本项目及其相关文件和内容（统称为“资源”）的法律协议的一部分。
+使用这些资源时，您必须遵守所有适用的法律和最佳实践。您独立负责确保您的使用方式不侵犯任何第三方的权利，包括但不限于隐私权、知识产权和任何其他所有权或法律权利。
+
+### Lawful Use/**使用合规性**
+
+You agree and undertake to use these Resources only for lawful purposes, and within the restrictions and guidelines set by applicable laws and regulations. You must ensure that your conduct with respect to the Resources is compliant with the laws of the country you reside in and/or the country from where you use these Resources. You must not use the Resources in a way that violates these laws or engage in conduct that is unethical. Your use of the provided Resources must align with all relevant laws and regulations of your jurisdiction. These Resources are meant purely for technical demonstration and must not be utilized for any illegal activity or acts infringing on the rights of others.
+
+您同意并承诺，只将这些资源用于合法目的，并在适用法律、法规和实践中制定的限制和指导方针内使用这些资源。您必须确保您的行为遵守您所在国家/地区和/或您的使用这些资源的国家/地区适用的所有法律。您不得使用这些资源去违法这些法律或从事不道德的活动。在使用所提供的资源时，您必须确保您的行为符合您所在国家/地区的所有相关法律和法规。这些资源仅为技术展示，不得用于任何非法活动或侵犯他人权利的行为。
+
+### **Limitation of Liability**/**责任限制**
+
+The provision of code is simply for offering design reference and technical insight, and will not be responsible for any direct, indirect, incidental, special, punitive, or consequential damages that arise from the use of these Resources. You understand and agree that you are solely responsible for the consequences of your use of these Resources, whether good or bad.
+
+提供代码只是在提供设计参考和技术分享，不对任何因使用这些资源而引发的直接、间接、附带、特殊、惩罚性或后果性损害负责。您理解并同意您自己负责使用这些资源的后果，无论是好是坏。
+
+### As-Is Basis/**无担保**
+
+The Resources are provided on an "AS IS" basis, without any form of warranty expressed or implied. If you encounter bugs or any other form of tech gremlins, consider it as part of the adventure. This technology was conceived in the pursuit of pushing the boundaries of visual transmission capabilities, born purely from a technical testing ground.
+
+这些资源是按“原样”提供的，没有任何形式的明示或暗示担保。如果你们遇到bug或其他奇怪的技术缺陷，那就是命中注定🙂。这项技术是在探索视觉传输能力的边界时构思出来的，它的诞生完全出于一个技术试验。
+
+### Your Code, Your Responsibility/**自己的代码自己负责**
+
+This isn't a toolkit for digital dark arts. Remember with every keystroke, you wield the power to impact the real world with responsibilities attached. There's no Gandalf here to carry your burdens if you find yourself in a pickle. Whatever your decision on how to use this tech wizardry, you must bear the consequences, because crossing the streams can lead to a WOPR of a problem.
+
+这不是一个犯罪的工具包。希望你记住，伴随着你的每一个字符，都是影响现实世界的潜力和责任。没有谁会为你的麻烦背锅。无论你决定怎么用这玩意，一切后果都归你管，走火入魔可不是件好事。
+
+### **Your Actions, Your Response-Ability**/**你的行为，你的责任**
+
+If you flirt with the legal red tape or turn this project into the genesis of an issue, it's on you to carry that Infinity Gauntlet. Always ensure that your actions are safe, lawful, and reasonable. Do not let your quest turn into a cautionary tale.
+
+如果你不小心碰到了法律的红线，或者使得这个项目成为问题的根源，那么，你得自己担着。请务必确保你的所作所为是安全、正当、合理的。别让你的探险落得一个糟糕的结局。
+
+### EOF/最后的忠告
+
+Never forget the gravity of what you're doing - be aware of the potential consequences. Safety is the prime directive, and whatever tech enchantment you're conjuring, always respect and adhere to the law of the code... and the code of the law.
+
+永远不要忘记你在做什么，了解可能的后果。安全永远是首要原则，无论你在致力于何种技术创新，都应当尊重并遵循法律。
