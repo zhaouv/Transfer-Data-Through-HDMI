@@ -1,20 +1,48 @@
-# Transfer-Data-Through-HDMI
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sender</title>
+</head>
+<body>
 
-Imagine a computer setup where the main unit is locked in a cabinet, and only the mouse, keyboard, and a monitor cable extend to the desktop through a small opening. The computer is not connected to the internet. How can the data from this computer be copied out?
 
-For scenarios where the transmission cable can be unplugged, such as when using a non-customized monitor or when the monitor is not embedded in a cabinet, data can be rapidly transmitted using a video capture card.
 
-To achieve this, open the browser's developer tools console on the computer and type the following code from [psend1.html](./psend1.html). Run [precieve1.py](./precieve1.py) on the video capture card to complete the process.
 
-# 通过HDMI传输数据
+<script>
 
-假设有台这样的电脑摆在面前, 主机锁在柜子里, 只有鼠标键盘和一个显示器的线通过小孔拉到了桌面上, 电脑也没有连接到互联网, 如何把其中的数据复制出来.
+// // global vars
+// var canvas;
+// var fileInput;
 
-对于没有定制显示器或者显示器没有嵌入到柜子中, 能够把传输线拔下来的情况, 通过视频采集卡能够高速的传输数据出来.
+// var context;
 
-在这个电脑打开浏览器的开发者工具的console, 把[psend1.html](./psend1.html)中的如下部分敲进去执行, 视频采集卡运行[precieve1.py](./precieve1.py)即可完成.  
+// var bytePerFrame;
+// var imageData;
+// var fileSizeB;
+// var fileContent;
+// var fpsDelay;
+// var fpsCount;
+// var t1;
+// var fcount;
+// var eof;
 
-```js
+// var startt;
+// var xorFilePart;
+// var xorHeadPart;
+// var countB;
+// var filePart;
+// var effectiveByte;
+// var effectiveByteB;
+// var rawdata;
+// var rawframe;
+// var currentt;
+// var costt;
+// var t2;
+
+///////////////////// start here /////////////////////
+
 var width = 1920;
 var height = 1080;
 var useWidth = 1920 - 64;
@@ -196,95 +224,52 @@ function showFileContent(fileContent) {
     }, 5000);
 
 }
-```
 
-## Protocol
+///////////////////// end here /////////////////////
 
-For instance, using a region of 1920-64,1080, with the right side reserved for the mouse (64 width is removed for convenience):
 
-The frame rate on the capture end needs to be greater than the output end, set at 4 frames/s.
 
-Each point is duplicated into a 2x2 grid, storing 1 bit of information.
 
-The protocol starts with 4 bytes indicating the current frame number, followed by 4 bytes for the effective byte count in the current frame, then 8 bytes indicating the total byte count, followed by 4 bytes for the XOR of the header section. After that comes the data section, and after the effective length, 4 more bytes are appended to calculate the XOR of the data section.
 
-`((1920-64)/2)*(1080/2)*1/8-(4+4+8+4+4)=62616`
 
-| Byte Count | 4 | 4 | 8 | 4 | 62616 | 4 |
-|------------|---|---|---|---|-------|---|
-| Content    | Current Frame | Effective Byte Count | Total Byte Count | Header XOR | File Content | Content XOR |
+function test() {
+    // test byte
+    var testa1=new Uint8Array(24)
+    byte2bit([1,2], testa1)
+    console.log(testa1);
+    byte2bit([1,2], testa1, 8, true)
+    console.log(testa1);
+    console.log(int2byte(1234567890, 4));
+    console.log(int2byte(12345678901234567890, 8));
+    console.log(int2byte(1, 4));
+    console.log(int2byte(1, 8));
+    console.log(int2byte((101<<8)+103, 4));
+    console.log(int2byte((101<<8)+103, 8));
 
-## 协议
+    // test print
+    cw=width
+    ch=height
+    imd=new Uint8ClampedArray(cw * ch * 4)
+    for (var index = 0; index < imd.length; index++) {
+        xx=(~~(index/4))%cw
+        yy=(~~(index/4)-xx)/cw
+        if (index%4==3) {
+            
+            imd[index]=255;
+        } else {
+            imd[index]=255*Math.random();
+            if (xx<50 && yy<30 && xx>=10 && yy>=10) {
+                imd[index]=125
+            }
+        }
+        
+    }
+    context.putImageData(new ImageData(imd, cw, ch), 0, 0);
 
-例如使用 1920-64,1080 的区域, 右边用来放鼠标, (为了方便直接切掉了64宽度的一整条)
 
-采集端的帧率需要大于输出端, 暂定为4帧/s
+}
 
-每个点重复成2x2的格子, 储存1比特的信息
 
-开头4字节当前第几帧, 再4字节本帧的有效字节数, 再8字节表明总字节数, 再4字节head部分的xor, 然后是数据部分, 有效长度之后再补4字节用来算数据部分的xor
-
-`((1920-64)/2)*(1080/2)*1/8-(4+4+8+4+4)=62616`
-
-|字节数|4|4|8|4|62616|4|
-|-|-|-|-|-|-|-|
-|内容|当前帧数|本帧有效字节数|文件总字节数|协议头的校验|文件内容|文件内容的校验|
-
-## Implementation
-
-Currently, a simplified implementation has been done for storing 1 bit in a 2x2 grid and 3 bits in a 4x4 grid. The cheapest HDMI in + HDMI out + USB 3.0 capture card, priced at RMB129, has considerable compression, reaching this level, and the fps can only go up to 5. For the combination of storing 3 bits in a 4x4 grid, each frame's information is 3/4 of storing 1 bit in a 2x2 grid.
-
-[Transmission End (JavaScript)](psend1.html) or [Transmission End (Python for debugging)](psend1.py)  
-[Reception End](precieve1.py)
-
-## 实现
-
-目前简略实现了 2x2的格子储存1比特 和 4x4的格子储存3比特 ,最便宜的 hdmi in + hdmi out + usb3.0 的 RMB129的采集卡, 压缩的比较多, 只能到这种程度了, 而且fps只能到5. 4x4的格子储存3比特 的组合的话每帧的信息是 2x2的格子储存1比特 的3/4.
-
-发送端[js](psend1.html) 或者 [py(用于调试)](psend1.py)  
-[接收端](precieve1.py)  
-
-## Results
-
-Successfully transmitted a 60,448,768-byte file in 247 seconds.
-
-## 效果
-
-247秒正确传输了一个60448768字节的文件
-
-```
-turn 1
-...
-done frame 965
-1270 246.32172799110413 5.155858601502933
-not pass the xor_head_part check
-1271 246.43009567260742 5.157649257615742
-missing frame: [1, 2, 3, 4]
-
-the mouse cover some pixels at the start
-
-turn 2
-50 5.202116966247559 9.611471699773503
-done frame 1
-done frame 2
-done frame 3
-done frame 4
-not pass the xor_head_part check
-57 6.628857135772705 8.598767303702902
-missing frame: [0, 5, 6, ...]
-
-filesize 60448768 fcount 966
-...
-950 237.2980456352234 4.003404231404199
-960 239.79769849777222 4.003374536177705
-966 241.49949431419373 4.000008375765883
-
-xxx% ssh xxx "md5sum ~/e/extensions.zip"
-abbfda1a505eedbd2bea255fb60bffe6  /home/xxx/e/extensions.zip
-xxx% md5 dev.test.zip 
-MD5 (dev.test.zip) = abbfda1a505eedbd2bea255fb60bffe6
-
-60448768/247 - 238kByte/s
-
-```
-
+</script>
+</body>
+</html>

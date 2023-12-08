@@ -23,6 +23,8 @@ width=1920
 height=1080
 use_width=1920-64
 use_height=1080
+use_left=0
+use_top=0
 case=0
 if case==0:
     d=2
@@ -73,7 +75,7 @@ lastt=t1
 for count in range(fcount): # display all frame
     startt=time.time()
     xor_file_part=np.uint8([0,0,0,0])
-    xor_head_part=np.uint8([255,0,85,170]) # to avoid pure black or white pass the check
+    xor_head_part=np.uint8([255,0,0b01010101,0b10101010]) # to avoid pure black or white pass the check
     countB=int2byte(count,np.int32)
 
     filepart = np.fromfile(path,dtype='uint8',count=byte_per_frame,offset=byte_per_frame*count)
@@ -107,7 +109,7 @@ for count in range(fcount): # display all frame
 
     for ii in range(d):
         for jj in range(d):
-            canvas[ii:use_height:d,jj:use_width:d,:]=rawframe
+            canvas[ii+use_top:use_height+use_top:d,jj+use_left:use_width+use_left:d,:]=rawframe
 
     cv2.imshow('canvas', canvas)
     # cv2.imshow('canvas', np.random.randint(0,2,size=(height//d, width//d),dtype="uint8")*255)

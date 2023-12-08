@@ -60,6 +60,8 @@ width=1920
 height=1080
 use_width=1920-64
 use_height=1080
+use_left=0
+use_top=0
 case=0
 if case==0:
     d=2
@@ -86,9 +88,9 @@ def eachframe(frame):
         for jj in range(d):
             if color==1:
                 for kk in range(3):
-                    tosum+=frame[ii:use_height:d,jj:use_width:d,kk:kk+1]
+                    tosum+=frame[ii+use_top:use_height+use_top:d,jj+use_left:use_width+use_left:d,kk:kk+1]
             elif color==3:
-                tosum+=frame[ii:use_height:d,jj:use_width:d,:]
+                tosum+=frame[ii+use_top:use_height+use_top:d,jj+use_left:use_width+use_left:d,:]
             else:
                 raise RuntimeError('color should be 1 or 3')
     retpic = (tosum/(d*d*3/color)).astype("uint8")
