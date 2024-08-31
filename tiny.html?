@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sender(tiny and may not work)</title>
+</head>
+<body>
+<script>
+
+// globals and short aliases
+const U8=Uint8Array,now=Date.now,d=document,
+w=1920,h=1080,uw=1856,uh=1080,ul=0,ut=0,fps=4,dd=2,c=1,
+dpr=window.devicePixelRatio||1;
+
+// compressed utility functions
+const i2b=(n,l)=>new U8(l).map((_,i)=>Number((BigInt(n)>>BigInt(i*8))&255n)),
+b2b=(b,t,o=0,r)=>{b.forEach((v,i)=>[...Array(8)].map((_,j)=>t[o+i*8+j]=(v>>j)&1));r&&t.subarray(o,o+8*b.length).reverse()},
+xor=(a,b)=>a.map((v,i)=>a[i]^=b[i%b.length]),
+on=(e,v,f)=>e.addEventListener(v,f),
+cr=(t,a)=>Object.assign(d.createElement(t),a);
+
+// setup
+const cv=cr('canvas',{width:w,height:h,style:`width:${w/dpr}px;height:${h/dpr}px;background:#000`}),
+cx=cv.getContext('2d'),
+fi=cr('input',{type:'file'});
+[cv,fi].map(e=>d.body.appendChild(e));
+
+// fullscreen toggle
+on(cv,'dblclick',()=>d[d.fullscreenElement?'exitFullscreen':'documentElement'].requestFullscreen());
+
+// main
+on(fi,'change',e=>{
+  const r=new FileReader();
+  r.onload=ev=>{
+    const f=new U8(ev.target.result),
+    bpf=~~((uh*uw)/(dd**2*8))*c-24,
+    fc=Math.ceil(f.length/bpf),
+    fsb=i2b(f.length,8);
+    let fpc=0,eof=0,t1;
+
+    const rf=ct=>{
+      const s=now(),
+      xp=new U8(4),xh=new U8([255,0,85,170]),
+      cb=i2b(ct,4),
+      fp=f.slice(bpf*ct,bpf*(ct+1)),
+      eb=fp.filter(Boolean).length,
+      eb_b=i2b(eb,4);
+
+      xor(xp,fp);
+      xor(xh,[...cb,...eb_b,...fsb]);
+
+      const rd=new U8((uh/dd)*(uw/dd)*c);
+      [cb,eb_b,fsb,xh,fp,xp].map((a,i)=>b2b(a,rd,[0,32,64,128,160,160+bpf*8][i],i<4));
+
+      const rf=c===3?rd.map(v=>v*255):new U8((uh/dd)*(uw/dd)*3).map((_,i)=>rd[~~(i/3)]*255),
+      id=new U8(w*h*4);
+
+      [...Array(uw/dd)].forEach((_,x)=>
+        [...Array(uh/dd)].forEach((_,y)=>{
+          const fi=(y*(uw/dd)+x)*3;
+          [...Array(dd)].forEach((_,i)=>
+            [...Array(dd)].forEach((_,j)=>{
+              const pi=((ut+j+y*dd)*w+ul+i+x*dd)*4;
+              id.set(rf.slice(fi,fi+3),pi);
+              id[pi+3]=255;
+            })
+          );
+        })
+      );
+
+      cx.putImageData(new ImageData(id,w,h),0,0);
+
+      fpc++;
+      fpc%10===0&&console.log(fpc,(now()-t1)/1e3,1e3*fpc/(now()-t1));
+
+      const dl=Math.max(1,1e3/fps-(now()-s));
+      (ct<fc-1&&!eof)?setTimeout(()=>rf(ct+1),dl):console.log('Done');
+    };
+
+    setTimeout(()=>{t1=now();rf(0)},5e3);
+  };
+  r.readAsArrayBuffer(e.target.files[0]);
+});
+
+</script>
+</body>
+</html>
